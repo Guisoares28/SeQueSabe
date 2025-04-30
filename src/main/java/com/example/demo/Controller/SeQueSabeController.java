@@ -3,6 +3,7 @@ package com.example.demo.Controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Models.ComidaModel;
+import com.example.demo.Models.ContadorModel;
 import com.example.demo.Repositories.ComidaRepository;
+import com.example.demo.Repositories.ContRepository;
 import com.example.demo.Utils.UtilsService;
 
 
@@ -23,12 +26,18 @@ public class SeQueSabeController {
 
     private final ComidaRepository comidaRepository;
 
-    public SeQueSabeController(ComidaRepository comidaRepository) {
+    private final ContRepository contRepository;
+
+    public SeQueSabeController(ComidaRepository comidaRepository, ContRepository contRepository) {
         this.comidaRepository = comidaRepository;
-    }
+        this.contRepository = contRepository;    }
 
     @PostMapping("/tudo")
     public ResponseEntity<Map<String, String>> pegarTudo(@RequestBody(required = false) List<String> listaItens){
+        ContadorModel cont = contRepository.findById(1L)
+            .orElseThrow(() -> new RuntimeException("Erro ao buscar contador"));
+        cont.incrementar();
+        contRepository.save(cont);
         List<ComidaModel> lista = comidaRepository.findAll();
         ComidaModel comida = null;
         if(listaItens == null || listaItens.isEmpty()){ 
@@ -37,7 +46,9 @@ public class SeQueSabeController {
             List<ComidaModel> listaFiltrada =  UtilsService.filtrarComida(lista, listaItens);
             comida = UtilsService.trazerComidaAleatorio(listaFiltrada);
         }
-       return ResponseEntity.ok(Map.of("resultado", comida.getNome()));
+       return ResponseEntity.ok(Map.of("resultado", comida.getNome(),
+                                        "contador", cont.getCont().toString()
+       ));
     }
 
     

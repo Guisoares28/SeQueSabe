@@ -2,6 +2,7 @@ let checkCasa = document.getElementById("casa");
 let checkFora = document.getElementById("fora");
 let buttonEnviar = document.getElementById("bt-enviar");
 let resposta = document.getElementById("decidido");
+let contador = document.getElementById("contador");
 
 async function separarItensQueNaoGostam() {
   return document
@@ -57,12 +58,14 @@ buttonEnviar.addEventListener("click", async () => {
   if (lista.length === 0) {
     let resultado = await fazerReq("http://localhost:8080/sequesabe/tudo");
     resposta.textContent = resultado.resultado;
+    contador.textContent = resultado.contador;
   } else {
     let resultado = await fazerReqComBody(
       "http://localhost:8080/sequesabe/tudo",
       lista
     );
     resposta.textContent = resultado.resultado;
+    contador.textContent = resultado.contador;
   }
 });
 
