@@ -55,13 +55,21 @@ async function fazerReqComBody(url, lista) {
 
 buttonEnviar.addEventListener("click", async () => {
   let lista = await separarItensQueNaoGostam();
+  let resultado = "";
+  let tipo = "";
+  if (checkCasa.checked) {
+    tipo = "casa";
+  } else if (checkFora.checked) {
+    tipo = "fora";
+  }
+  url = "/tudo?tipo=" + encodeURIComponent(tipo);
   if (lista.length === 0) {
-    let resultado = await fazerReq("http://localhost:8080/sequesabe/tudo");
+    resultado = await fazerReq("http://localhost:8080/sequesabe" + url);
     resposta.textContent = resultado.resultado;
     contador.textContent = resultado.contador;
   } else {
-    let resultado = await fazerReqComBody(
-      "http://localhost:8080/sequesabe/tudo",
+    resultado = await fazerReqComBody(
+      "http://localhost:8080/sequesabe" + url,
       lista
     );
     resposta.textContent = resultado.resultado;

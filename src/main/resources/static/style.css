@@ -17,6 +17,10 @@ h3 {
   color: #6d4c41;
 }
 
+main {
+  width: 100%;
+}
+
 .titulo {
   width: 100%;
 }
@@ -81,4 +85,42 @@ h3 {
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.social-section {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.social-icon {
+  margin: 0 10px;
+  font-size: 2rem;
+  text-decoration: none;
+}
+
+.social-icon.github {
+  color: #333;
+}
+
+.social-icon.linkedin {
+  color: #0077b5;
+}
+
+.social-icon.instagram {
+  color: #e1306c;
+}
+
+.curtir-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 2rem;
+}
+
+.curtido {
+  color: #28a745; /* verde quando curtido */
+}
+
+.nao-curtido {
+  color: #007bff; /* azul padrão */
 }
