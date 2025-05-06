@@ -43,6 +43,8 @@ public class SeQueSabeController {
                                                         @RequestParam(value = "tipo", required = false) String tipo){
 
         List<ComidaModel> lista = new ArrayList<>();
+        ContadorModel cont = contRepository.findById(1L)
+                .orElseThrow(() -> new RuntimeException("contador não encontrado"));
         if(tipo == null || tipo.isEmpty()){
             lista = comidaRepository.findAll();
         }else if(tipo.equalsIgnoreCase("casa")){
