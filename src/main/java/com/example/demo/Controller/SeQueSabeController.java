@@ -41,8 +41,7 @@ public class SeQueSabeController {
     @PostMapping("/tudo")
     public ResponseEntity<Map<String, String>> pegarTudo(@RequestBody(required = false) List<String> listaItens,
                                                         @RequestParam(value = "tipo", required = false) String tipo){
-        ContadorModel cont = contRepository.findById(1L)
-            .orElseThrow(() -> new RuntimeException("Erro ao buscar contador"));
+
         List<ComidaModel> lista = new ArrayList<>();
         if(tipo == null || tipo.isEmpty()){
             lista = comidaRepository.findAll();
@@ -63,6 +62,12 @@ public class SeQueSabeController {
        return ResponseEntity.ok(Map.of("resultado", comida.getNome(),
                                         "contador", cont.getCont().toString()
        ));
+    }
+
+    @PostMapping("/criarContador")
+    public ResponseEntity<String> criarContador(@RequestBody ContadorModel contadorModel){
+        contRepository.save(contadorModel);
+        return ResponseEntity.ok("Contador adicionado com sucesso");
     }
 
 }
