@@ -44,7 +44,7 @@ public class SeQueSabeController {
         ContadorModel cont = contRepository.findById(1L)
             .orElseThrow(() -> new RuntimeException("Erro ao buscar contador"));
         List<ComidaModel> lista = new ArrayList<>();
-        if(tipo.isEmpty() || tipo == null){
+        if(tipo == null || tipo.isEmpty()){
             lista = comidaRepository.findAll();
         }else if(tipo.equalsIgnoreCase("casa")){
             lista = comidaRepository.findByTipo(ComidaEnum.RECEITA);
